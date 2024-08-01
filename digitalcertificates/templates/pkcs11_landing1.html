@@ -1,0 +1,443 @@
+{% load static %}
+
+<html>
+
+<head>
+    <title>Aceptación de términos y condiciones del servicio</title>
+    <meta charset="utf-8"/>
+    <meta name="description" content="Aceptación de términos y condiciones del servicio"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400&display=swap" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: "OpenSans", Sans-Serif;
+        margin: 0;
+        font-size: 14px;
+        font-weight: 300;
+    }
+
+    section {
+        width: 80%;
+        max-width: 1000px;
+        margin: 0 auto;
+    }
+
+    header {
+        text-align: center;
+    }
+
+    header img {
+        max-width: 100%;
+        height: auto;
+        margin-top: 10px;
+    }
+
+    h1 {
+        text-transform: uppercase;
+        text-align: center;
+    }
+
+    p {
+        line-height: 1.5;
+        text-align: justify;
+    }
+
+    .row {
+        padding: 20px;
+        width: 100%;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        box-shadow: 0px 0px 2px 0px #ccc;
+    }
+
+    .column {
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+    }
+
+    .form-group {
+        width: 50%;
+        margin-bottom: 20px;
+    }
+
+    .idDocument {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        & select, & input:nth-child(1) {
+            width: 100px;
+        }
+    }
+
+    label {
+        font-weight: bold;
+        text-transform: capitalize;
+        color: #636262;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    select,
+    input[type="date"] {
+        width: 100%;
+        padding: .375rem .75rem;
+        font-size: 16px;
+        height: 3.125rem;
+        border-radius: .25rem;
+        border: none;
+        margin-top: 0.5rem;
+        color: #495057;
+        background-color: #f4f4f4;
+    }
+
+    @media only screen and (max-width: 768px) {
+        .column {
+            display: block;
+        }
+
+        .form-group {
+            width: 100% !important;
+        }
+    }
+
+    span {
+        color: #03cdd5;
+    }
+
+    .boton {
+        background-color: hsl(349, 94%, 41%);
+        border-width: 0;
+        color: #FFFFFF;
+        padding: 8px 16px;
+        border-radius: 5px;
+        font-size: 16px;
+        font-weight: 400;
+        transition: ease-in-out 150ms;
+
+    }
+
+    .boton:disabled, .boton:disabled:hover {
+        background-color: #bebebe;
+        color: #000;
+        cursor: pointer;
+    }
+
+    .boton:hover {
+        background-color: hsl(182, 97%, 32%);
+        cursor: pointer;
+    }
+
+    .codigo {
+        margin: 0;
+        text-align: center;
+    }
+
+    .error {
+        outline: 2px solid red;
+        outline-offset: -2px;
+    }
+
+    .input-error {
+        color: red;
+        display: none;
+        margin-top: 4px;
+    }
+
+    .mg-25 {
+        margin-top: 25px;
+    }
+
+    .enviar {
+        text-align: center;
+    }
+
+    .terminado {
+        text-align: center;
+    }
+
+    .is-invalid {
+        border-color: #f05050 !important;
+        padding-left: calc(1.52857em + 0.75rem);
+        background-image: none;
+        background-repeat: no-repeat;
+        background-position: center left calc(0.38214em + 0.1875rem);
+        background-size: calc(0.76429em + 0.375rem) calc(0.76429em + 0.375rem);
+    }
+
+    .was-validated .form-control:invalid:focus, .form-control.is-invalid:focus {
+        border-color: #f05050;
+        box-shadow: 0 0 0 0.2rem rgba(240, 80, 80, 0.25);
+    }
+
+    .was-validated .form-control:invalid ~ .invalid-feedback,
+    .was-validated .form-control:invalid ~ .invalid-tooltip, .form-control.is-invalid ~ .invalid-feedback,
+    .form-control.is-invalid ~ .invalid-tooltip {
+        display: block;
+    }
+
+    input[type='checkbox'].is-invalid {
+        outline: 2px solid red;
+        outline-offset: -2px;
+    }
+
+    .invalid-feedback {
+        display: none;
+        color: #f05050;
+        margin-bottom: 2px;
+    }
+
+</style>
+
+<body>
+
+<header>
+    <img src="{{ logo }}" width="200">
+</header>
+
+<section>
+    <h1>
+
+    </h1>
+    <br>
+
+    {% if error %}
+    <p style="background-color:#F3E1E1; border-radius: 6px; margin: 0px 0 10px; padding: 20px 10px; text-align: center;">
+        {{ error }}
+    </p>
+    {% endif %}
+    {% if finished %}
+    <p style="background-color:#dff0d8; border-radius: 6px; margin: 0px 0 10px; padding: 20px 10px; text-align: center;">
+        {{ finished }}
+    </p>
+    {% endif %}
+    {% if success and not finished and not error %}
+    <p style="background-color:#dff0d8; border-radius: 6px; margin: 0px 0 10px; padding: 20px 10px; text-align: center;">
+        Estimado usuario, el servicio al que intenta acceder ya no se encuentra disponible debido a que ha
+        caducado o ha sido completado previamente.
+    </p>
+    {% endif %}
+
+    {% if not success and not error and not finished %}
+    <div>
+        <!-- ACCEPTANCE FORM -->
+
+        <form method="post" id="order_form">
+            {% csrf_token %}
+            <p>
+                Estimado usuario,<br>
+                <br>
+                Para acceder a las sedes electrónicas de las AAPP utilizando Cl@ve PIN y obtener los informes.:<br>
+                <b>{{ products|join:", " }}</b><br><br>
+                Para el NIF/NIE:<br>
+                <b>{{ nif }}</b><br><br>
+                Que se remitirán a:<br>
+                <b>{{ order.reseller_name }}</b>
+                <br><br>
+                <b>Por favor, acepte los términos y condiciones y solicite clave temporal pulsando continuar:</b><br>
+                <input type="checkbox" required> He leído y estoy de acuerdo con las
+                <a href="https://pinpass-api-media-prod.s3.amazonaws.com/condicionados_legales/condicionado_legal_pinpass.pdf"
+                   target="_blank">condiciones del servicio</a> y la
+                <a href="https://pinpass-api-media-prod.s3.amazonaws.com/condicionados_legales/politica_privacidad_pinpass.pdf"
+                   target="_blank">política de privacidad</a>
+
+            </p>
+            <br>
+            <button type="submit" class="boton" id="enviar_datos">Continuar</button>
+        </form>
+
+    </div>
+
+
+    <div style="text-align: justify">
+        <br>
+        INFORMACIÓN BÁSICA SOBRE PROTECCIÓN DE DATOS
+        <br><br>
+        Responsable: Adelantada de Soluciones Digitales S.L Finalidad: prestar al Usuario los servicios ofrecidos a
+        través de la Plataforma Pinpass. Comunicaciones de datos: cliente de ADELANTADA que haya solicitado
+        el informe. Derechos: acceder, rectificar o suprimir los datos, así como otros derechos reconocidos en
+        la normativa de protección de datos. Información adicional: puede consultar la información adicional
+        y detallada en nuestra
+        <a
+                href="https://pinpass-api-media-prod.s3.amazonaws.com/condicionados_legales/politica_privacidad_pinpass.pdf"
+                target="_blank"
+                style="color:#6D6D6D; text-decoration: underline; font-size: 14px; font-weight: bold;">
+            Política de Privacidad</a>
+
+    </div>
+    {% endif %}
+
+</section>
+
+<script>
+    const selectElement = document.getElementById("person_national_document_type");
+    const dateFieldLabel = document.getElementById("fecha_emision_label");
+    const dateField = document.getElementById("person_dni_validation_date");
+
+    if (selectElement && dateField && dateFieldLabel) {
+        selectElement.addEventListener("change", function () {
+            const selectedValue = selectElement.value;
+            // if any errors already present
+            dateField.value = ''
+            showInputValidationMessage(dateField, false)
+
+            if (selectedValue === "dni") {
+                dateFieldLabel.textContent = "Fecha de validez";
+                dateField.type = 'date'
+            } else if (selectedValue === "dni_permanente") {
+                dateFieldLabel.textContent = "Fecha de emision";
+                dateField.type = 'date'
+            } else if (selectedValue === "tja_residencia") {
+                dateFieldLabel.textContent = "Número de soporte";
+                dateField.type = 'text'
+            }
+        });
+    }
+
+    const disableButton = (btnElement, formElement) => {
+        btnElement.addEventListener("click", function (event) {
+            event.preventDefault();
+
+            if (formElement.checkValidity()) {
+                if (selectElement && dateField) {
+                    if (selectElement.value === 'tja_residencia') {
+                        if (dateField.value.length < 9) {
+                            // if not started with E
+                            if (!/^[ECec]/.test(dateField.value)) return
+                            dateField.value = `${dateField.value[0]}${dateField.value.slice(1).padStart(8, '0')}`;
+                        }
+                    }
+                }
+
+                btnElement.setAttribute('disabled', 'true')
+                btnElement.textContent = "Procesando..."
+                formElement.submit()
+            } else {
+                checkFormValidations(formElement);
+            }
+        });
+    }
+
+    const btnElementReturn = document.getElementById('enviar_datos_1')
+    const formElementReturn = document.getElementById('return_url_form')
+    if (btnElementReturn && formElementReturn) {
+        disableButton(btnElementReturn, formElementReturn)
+    }
+
+    const btnElement = document.getElementById('enviar_datos')
+    const formElement = document.getElementById('order_form')
+    if (btnElement && formElement) {
+        disableButton(btnElement, formElement)
+    }
+
+    // handle nif input change
+    const nifInput = document.getElementById('person_national_id')
+    if (nifInput) {
+        nifInput.addEventListener('input', (event) => {
+            event.preventDefault();
+            const value = event.target.value
+            if (value) {
+                const isValid = validateDNI(value)
+                showInputValidationMessage(nifInput, !isValid)
+            }
+        })
+    }
+
+    // handle date input change
+    if (dateField) {
+        dateField.addEventListener('input', (event) => {
+            event.preventDefault();
+            const value = event.target.value
+
+            if (event.target.type === 'date') {
+                if (value && value === '9999-01-01' && selectElement.value === 'dni_permanente') {
+                    showInputValidationMessage(dateField, true, 'Necesitamos la Fecha de Emisión, no la Fecha de Validez')
+                } else if (value === '9999-01-01' && selectElement.value === 'dni') {
+                    showInputValidationMessage(dateField, true, 'Se trata de un DNI permamente. Por favor, seleccione esa opción en el selector de Tipo de Documentación y tras eso, indiquenos la fecha de emisión')
+                } else {
+                    showInputValidationMessage(dateField, false, '')
+                }
+            } else {
+                if (value) {
+                    validateNIEFormat(dateField)
+                }
+            }
+        })
+    }
+
+    function validateNIEFormat(input) {
+        let value = input.value.trim();
+
+        if (!/^[ECec]/.test(value)) {
+            showInputValidationMessage(input, true, 'Número de soporte incorrecto')
+            return
+        }
+
+        showInputValidationMessage(input, false, '')
+    }
+
+    function checkFormValidations(formElement) {
+        const inputs = formElement.querySelectorAll('input[required]');
+        inputs.forEach(input => {
+            showInputValidationMessage(input, !input.checkValidity())
+        });
+    }
+
+    function showInputValidationMessage(input, isError, text) {
+        const errorSpan = document.getElementById(`${input.id}-error`);
+        if (errorSpan) {
+            if (isError) {
+                input.style.border = '1px solid red';
+                errorSpan.style.display = 'block';
+                if (text) errorSpan.textContent = text
+            } else {
+                input.style.border = 'none';
+                errorSpan.style.display = 'none';
+            }
+        } else {
+            input.style.border = '1px solid red';
+            if (input.type === 'checkbox') {
+                input.classList.add('is-invalid')
+            }
+        }
+    }
+
+    function validateDNI(dni) {
+        let numero, value, letra;
+        const expresion_regular_dni = /^[XYZ]?\d{5,8}[A-Z]$/;
+
+        dni = dni.toUpperCase();
+
+        if (expresion_regular_dni.test(dni) === true) {
+            numero = dni.substr(0, dni.length - 1);
+            numero = numero.replace('X', 0);
+            numero = numero.replace('Y', 1);
+            numero = numero.replace('Z', 2);
+            value = dni.substr(dni.length - 1, 1);
+            numero = numero % 23;
+            letra = 'TRWAGMYFPDXBNJZSQVHLCKET';
+            letra = letra.substring(numero, numero + 1);
+            if (letra !== value) {
+                return false;
+            } else {
+                return true;
+            }
+        } else {
+            return false;
+        }
+    }
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+
+  crawler-pinpass:
+    # Linea para ejecutar contenedor sobre imagen local
+    # image: pinpass-crawler:v1.1.0
+
+    # Lineas para hacer el build en el server
+    build:
+       context: .
+       dockerfile: Dockerfile
+    entrypoint: [ "gunicorn", "cirbox.wsgi", "--bind=0.0.0.0", "--timeout=180", "--workers=4" , "--threads=2" ]
+    ports:
+      - "80:8000"
+    env_file:
+      - .env.pinpass
+    volumes:
+      - .:/opt/src
+      - /static:/app/static
+      - ./:/app
